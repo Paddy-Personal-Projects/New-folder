@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ceaser Cipher</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fdfbfb, #ebedee);
+            color: #333;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: linear-gradient(90deg, #4a90e2, #357ABD);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+
+        nav {
+            background: #2c3e50;
+            padding: 0.75rem;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        nav a {
+            color: white;
+            margin: 0 12px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease, border-bottom 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #f1c40f;
+            border-bottom: 2px solid #f1c40f;
+        }
+
+        main {
+            padding: 2rem;
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            flex: 1;
+        }
+
+        main h2 {
+            color: #4a90e2;
+        }
+
+        footer {
+            background: #2c3e50;
+            color: #ccc;
+            text-align: center;
+            padding: 1rem;
+            font-size: 0.9rem;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Ceaser Cipher Site</h1>
+    </header>
+    <nav>
+        <a href="#">Home</a>
+    </nav>
+    <main>
+        <h2>Info:</h2>
+        <p>This is a web page to generate ceaser ciper passwords.
+        ceaser ciphers work by 'shifting' all letters up the alphabet 
+        desired amount, to transform a legible sentence into encrypted gibberish. </p>
+
+        <form id="passwordForm">
+            <label for="nshift">Enter Password:</label>
+            <input type="text" id="nshift" name="nshift"><br><br>
+
+            <label for="quant">Enter Shifting Amount:</label>
+            <input type="text" id="quant" name="quant"><br><br>
+
+            <input type="submit" value="Submit">
+            <p id="out"></p>
+        </form>
+
+    </main>
+    <footer>
+        <p>&copy; 2025 Patrick Wilson</p>
+    </footer>
+
+    <script>
+        document.getElementById("passwordForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            const prepassw = document.getElementById("nshift").value;
+            const quant = parseInt(document.getElementById("quant").value, 10);
+            const arr = Array.from(prepassw);
+            const outputEl = document.getElementById("out");
+
+            const alphabet = "abcdefghijklmnopqrstuvwxyz";
+            const upperAlphabet = alphabet.toUpperCase();
+
+            for (let i = 0; i < arr.length; i++) {
+                let char = arr[i];
+                if (alphabet.includes(char)) {
+                    let idx = alphabet.indexOf(char);
+                    arr[i] = alphabet[(idx + quant) % alphabet.length];
+                } else if (upperAlphabet.includes(char)) {
+                    let idx = upperAlphabet.indexOf(char);
+                    arr[i] = upperAlphabet[(idx + quant) % upperAlphabet.length];
+                }
+            
+            }
+
+            outputEl.textContent = arr.join("");
+        });
+    </script>
+</body>
+</html>
